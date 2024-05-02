@@ -1,0 +1,10 @@
+#tse-viewer {
+    border: 1px solid gray;
+    border-radius: 4px;
+    padding: 4px;
+}
+
+#tse-viewer img {
+    max-width: 30vw;
+    max-height: 30vh;
+}
