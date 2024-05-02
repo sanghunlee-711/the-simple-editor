@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>The Simple Editor</title>
+        <link rel="stylesheet" href="./src/styles/common.css" />
+        <link rel="stylesheet" href="./src/styles/editor.css" />
+        <link rel="stylesheet" href="./src/styles/viewer.css" />
+        <link
+            rel="stylesheet"
+            href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+            crossorigin="anonymous"
+        />
+    </head>
+
+    <body>
+        <table>
+            <tr>
+                으아아
+            </tr>
+            <tr>
+                으아아
+            </tr>
+            <tr>
+                으아아
+            </tr>
+            <tr>
+                으아아
+            </tr>
+            <tr>
+                으아아
+            </tr>
+        </table>
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vitae facere a
+        iure velit mollitia quis dicta, sed asperiores. Excepturi, tempora quae
+        explicabo earum eveniet eum sequi at laudantium ex necessitatibus.
+        <div id="tse-editor"></div>
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vitae facere a
+        iure velit mollitia quis dicta, sed asperiores. Excepturi, tempora quae
+        explicabo earum eveniet eum sequi at laudantium ex necessitatibus.
+        <script type="module" src="./dist/tse.js"></script>
+        <script type="module">
+            // Define your onCallback function
+            function onCallback(data) {
+                // Your callback function logic here
+                console.log('Callback function invoked with data:', data)
+            }
+
+            // Initialize TSEEditor class with onCallback function
+            const editor = new TSEEditor({ onCallback })
+        </script>
+    </body>
+</html>

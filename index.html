@@ -1,18 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>The Simple Editor</title>
+        <link rel="stylesheet" href="./src/styles/common.css" />
+        <link rel="stylesheet" href="./src/styles/editor.css" />
+        <link rel="stylesheet" href="./src/styles/viewer.css" />
+        <link
+            rel="stylesheet"
+            href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+            crossorigin="anonymous"
+        />
+    </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Simple Editor</title>
-  <link rel="stylesheet" href="./index.css" />
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" crossorigin="anonymous" />
-</head>
+    <body>
+        TSE(The Simple Editor)
+        <div id="tse-editor"></div>
 
-<body>
-  TSE(The Simple Editor)
-  <div id="text-editor"></div>
-  <script type="module" src="./src/index.js"></script>
-</body>
+        <hr />
 
+        TSE(The Simple Editor Viewer)
+        <div id="tse-viewer"></div>
+
+        <script type="module">
+            import TSEEditor from './src/editor/index.js'
+            const onSaveCallback = (data) => {
+                console.log('onSaveCallback data in index.html', data)
+            }
+            const editor = new TSEEditor({ onSaveCallback })
+        </script>
+
+        <script type="module" src="./src/viewer/index.js"></script>
+        <script></script>
+    </body>
 </html>
