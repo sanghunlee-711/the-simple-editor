@@ -111,14 +111,14 @@ class Node {
             node = node.parentNode
         }
 
-        return node
-            ? new Node({
-                  id: node.getAttribute('data-id'),
-                  tagName: node.tagName,
-                  content: node.textContent,
-                  attributes: Node.updateAttribute(node.attributes),
-              })
-            : null
+        if (!node) return null
+
+        return new Node({
+            id: node.getAttribute('data-id'),
+            tagName: node.tagName,
+            content: node.textContent,
+            attributes: Node.updateAttribute(node.attributes),
+        })
     }
 
     /**
