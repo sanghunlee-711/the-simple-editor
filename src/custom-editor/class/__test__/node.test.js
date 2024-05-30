@@ -1,5 +1,5 @@
 import { JSDOM } from 'jsdom'
-import Node from '../node.js'
+import Node from '../Node.js'
 
 const { window } = new JSDOM(
     '<!doctype html><html><body><div id="editor"></div></body></html>'
