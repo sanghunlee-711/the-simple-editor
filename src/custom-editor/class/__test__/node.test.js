@@ -1,9 +1,12 @@
 import { JSDOM } from 'jsdom'
 import Node from '../node.js'
 
-const { window } = new JSDOM()
+const { window } = new JSDOM(
+    '<!doctype html><html><body><div id="editor"></div></body></html>'
+)
 
 global.document = window.document
+global.window = window
 
 // Node 클래스 테스트
 describe('Node class', () => {
@@ -65,5 +68,23 @@ describe('Node class', () => {
         const foundNode = Node.findNodeById(parent, '2')
         expect(foundNode).not.toBeNull()
         expect(foundNode.element.textContent).toBe('child Node 2')
+    })
+
+    test('findNodeByCursor 메서드를 사용하는 경우, 커서 위치의 노드를 찾을 수 있어야 한다.', () => {
+        const editor = document.getElementById('editor')
+        const node = new Node(nodeData)
+        node.appendTo(editor)
+
+        // 커서를 노드의 텍스트 내용에 위치시킵니다.
+        const range = document.createRange()
+        const selection = window.getSelection()
+        range.selectNodeContents(node.element)
+        range.collapse(false)
+        selection.removeAllRanges()
+        selection.addRange(range)
+
+        const foundNode = Node.findNodeByCursor()
+        expect(foundNode).not.toBeNull()
+        expect(foundNode.id).toBe(nodeData.id)
     })
 })
