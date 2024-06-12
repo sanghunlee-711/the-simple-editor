@@ -1,18 +1,24 @@
-import { createSeparator } from '../utils/element.js'
-
 export default class ToolbarController {
-    constructor({ model, view }) {
+    constructor({ model, view, editorView }) {
         this.model = model
         this.view = view
+        this.editorView = editorView
         this.init()
     }
 
     init() {
         this.view.init()
-        this.addOptionsInToolBar(this.execCommand.bind(this))
-        this.addToolbarNodeIntoEditor()
+        this.makeToolbarNodeIntoEditor()
+        this.view.makeOptions(this.execCommand.bind(this))
 
         this.execCommand('defaultParagraphSeparator', 'p')
+    }
+
+    async uploadImage(event) {
+        const file = event.target.files[0]
+        const base64 = await convertBase64(file)
+        avatar.src = base64
+        textArea.innerText = base64
     }
 
     convertBase64(file) {
@@ -28,13 +34,6 @@ export default class ToolbarController {
                 reject(error)
             }
         })
-    }
-
-    async uploadImage(event) {
-        const file = event.target.files[0]
-        const base64 = await convertBase64(file)
-        avatar.src = base64
-        textArea.innerText = base64
     }
 
     toggleImageUploadPopup() {
@@ -76,64 +75,25 @@ export default class ToolbarController {
         }
     }
 
-    // * Check: execCommand가 갈수록 커질 것
+    // * TODO: execCommand가 갈수록 커질 것
     execCommand(commandId, value) {
         if (commandId === 'insertImage') {
-            console.log('insterImage value : ', value, this)
-            this.toggleImageUploadPopup()
-            return
+            return this.toggleImageUploadPopup()
         }
+
         document?.execCommand(commandId, false, value || '')
     }
 
-    addToolbarNodeIntoEditor() {
+    makeToolbarNodeIntoEditor() {
         const editor = document.getElementById('tse-editor')
 
         editor.insertAdjacentElement('beforebegin', this.view.toolbar)
     }
 
-    uploadImageCommand(commandId, value, callback) {
-        //*TODO: find element in direct way is not good
-        const popup = document.querySelector('.tse-image-upload-popup hidden')
-        if (popup.classList.contains('hidden')) popup.classList.remove('hidden')
-        else popup.classList.add('hidden')
-    }
-
-    addOptionsInToolBar(command) {
-        const { formatSelects, fontNameSelects } =
-            this.view.makeSelects(command)
-
-        const { boldButton, italicButton, underLineButton, uploadImage } =
-            this.view.makeButtons(command)
-        const { left, right, center } = this.view.makeAlign(command)
-        const { bulletedList, numberdList } = this.view.makeList(command)
-        const { dcreasedIndent, increasedIndent } =
-            this.view.makeIndent(command)
-
-        this.view.toolbar.insertAdjacentElement('beforeend', formatSelects)
-        this.view.toolbar.insertAdjacentElement('beforeend', fontNameSelects)
-
-        this.view.toolbar.insertAdjacentElement('beforeend', createSeparator())
-
-        this.view.toolbar.insertAdjacentElement('beforeend', boldButton)
-        this.view.toolbar.insertAdjacentElement('beforeend', italicButton)
-        this.view.toolbar.insertAdjacentElement('beforeend', underLineButton)
-        this.view.toolbar.insertAdjacentElement('beforeend', uploadImage)
-
-        this.view.toolbar.insertAdjacentElement('beforeend', createSeparator())
-
-        this.view.toolbar.insertAdjacentElement('beforeend', left)
-        this.view.toolbar.insertAdjacentElement('beforeend', center)
-        this.view.toolbar.insertAdjacentElement('beforeend', right)
-
-        this.view.toolbar.insertAdjacentElement('beforeend', createSeparator())
-
-        this.view.toolbar.insertAdjacentElement('beforeend', bulletedList)
-        this.view.toolbar.insertAdjacentElement('beforeend', numberdList)
-
-        this.view.toolbar.insertAdjacentElement('beforeend', createSeparator())
-
-        this.view.toolbar.insertAdjacentElement('beforeend', increasedIndent)
-        this.view.toolbar.insertAdjacentElement('beforeend', dcreasedIndent)
+    makeToolbarNodeIntoEditor() {
+        this.editorView.editor.insertAdjacentElement(
+            'beforebegin',
+            this.view.toolbar
+        )
     }
 }
