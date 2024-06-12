@@ -7,16 +7,17 @@ import ToolbarController from './controller/toolbar.js'
 export default class TSEEditor {
     constructor({ onSaveCallback, onSaveImageCallback } = {}) {
         this.editorModel = new EditorModel()
-
+        const editorView = new TextEditorView()
         new TextEditorController({
             model: this.editorModel,
-            view: new TextEditorView(),
+            view: editorView,
             onSaveCallback,
         })
 
         new ToolbarController({
             model: this.editorModel,
             view: new ToolbarView(),
+            editorView: editorView,
             onSaveImageCallback,
         })
 

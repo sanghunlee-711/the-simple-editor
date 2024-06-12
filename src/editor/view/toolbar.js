@@ -1,5 +1,10 @@
 import { $tseEditorToolbar } from '../constants/element.js'
-import { createButton, createIcon, createSelect } from '../utils/element.js'
+import {
+    createButton,
+    createIcon,
+    createSelect,
+    createSeparator,
+} from '../utils/element.js'
 
 class ToolbarView {
     constructor() {
@@ -154,6 +159,42 @@ class ToolbarView {
             dcreasedIndent,
             increasedIndent,
         }
+    }
+
+    makeOptions(command) {
+        const { formatSelects, fontNameSelects } = this.makeSelects(command)
+
+        const { boldButton, italicButton, underLineButton, uploadImage } =
+            this.makeButtons(command)
+        const { left, right, center } = this.makeAlign(command)
+        const { bulletedList, numberdList } = this.makeList(command)
+        const { dcreasedIndent, increasedIndent } = this.makeIndent(command)
+
+        this.toolbar.insertAdjacentElement('beforeend', formatSelects)
+        this.toolbar.insertAdjacentElement('beforeend', fontNameSelects)
+
+        this.toolbar.insertAdjacentElement('beforeend', createSeparator())
+
+        this.toolbar.insertAdjacentElement('beforeend', boldButton)
+        this.toolbar.insertAdjacentElement('beforeend', italicButton)
+        this.toolbar.insertAdjacentElement('beforeend', underLineButton)
+        this.toolbar.insertAdjacentElement('beforeend', uploadImage)
+
+        this.toolbar.insertAdjacentElement('beforeend', createSeparator())
+
+        this.toolbar.insertAdjacentElement('beforeend', left)
+        this.toolbar.insertAdjacentElement('beforeend', center)
+        this.toolbar.insertAdjacentElement('beforeend', right)
+
+        this.toolbar.insertAdjacentElement('beforeend', createSeparator())
+
+        this.toolbar.insertAdjacentElement('beforeend', bulletedList)
+        this.toolbar.insertAdjacentElement('beforeend', numberdList)
+
+        this.toolbar.insertAdjacentElement('beforeend', createSeparator())
+
+        this.toolbar.insertAdjacentElement('beforeend', increasedIndent)
+        this.toolbar.insertAdjacentElement('beforeend', dcreasedIndent)
     }
 }
 
